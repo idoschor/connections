@@ -13,6 +13,9 @@
     .header {
       text-align: center;
     }
+    a {
+      text-decoration: none;
+    }
     .puzzle-link {
       border: 1px solid #0000004f;
       margin: 1vh 10vw;
@@ -21,10 +24,53 @@
       display: flex;
       justify-content: space-between;
     }
-    .puzzle-link>a{
-      text-decoration: none;
+    .crossed-out.puzzle-link {
+      text-decoration: line-through;
+      opacity: 0.5;
+    }
+    .toggle-checkbox {
+      position: absolute; /* ignore flex */
+      right: 5vw;
     }
   </style>
+
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+      const checkboxes = document.querySelectorAll('.toggle-checkbox');
+
+      // Load saved states from localStorage and apply them
+      checkboxes.forEach((checkbox, index) => {
+        const checked = localStorage.getItem('checkbox' + index) === 'true';
+        checkbox.checked = checked;
+        updateTextDecoration(checkbox)
+      });
+
+      // Add event listener to each checkbox
+      checkboxes.forEach((checkbox, index) => {
+        checkbox.addEventListener('change', function() {
+          localStorage.setItem('checkbox' + index, checkbox.checked);
+
+
+          if (!document.startViewTransition) {
+            console.log('here')
+            updateTextDecoration(checkbox)
+          } else {
+            console.log('there')
+            document.startViewTransition(() => updateTextDecoration(checkbox));
+          }
+        });
+      });
+
+      function updateTextDecoration(checkbox) {
+        const label = checkbox.parentElement;
+        if (checkbox.checked) {
+          label.classList.add('crossed-out');
+        } else {
+          label.classList.remove('crossed-out');
+        }
+      }
+    });
+  </script>
 </head>
 <body>
   <div class='header'>
@@ -32,33 +78,43 @@
   </div>
   <div>
     <div class='puzzle-link'>
+      <input type="checkbox" class="toggle-checkbox">
       <a href='https://connections.swellgarfo.com/game/-NmBGvlnyW1NjdOn92lD'>ראשון</a>
     </div>
     <div class='puzzle-link'>
+      <input type="checkbox" class="toggle-checkbox">
       <a href='https://connections.swellgarfo.com/game/-NmBaSyyM98GaG8ud7c8'>שני</a>
     </div>
     <div class='puzzle-link'>
+      <input type="checkbox" class="toggle-checkbox">
       <a href='https://connections.swellgarfo.com/game/-NmBhOTqIKLd1-KdsF95'>שלישי</a>
     </div>
     <div class='puzzle-link'>
+      <input type="checkbox" class="toggle-checkbox">
       <a href='https://connections.swellgarfo.com/game/-NmBoC0BJ52Vqb-5RfEH'>רביעי</a>
     </div>
     <div class='puzzle-link'>
+      <input type="checkbox" class="toggle-checkbox">
       <a href='https://connections.swellgarfo.com/game/-NmCGnVRN2tHdvxX_QzQ'>חמישי</a>
     </div>
     <div class='puzzle-link'>
+      <input type="checkbox" class="toggle-checkbox">
       <a href='https://connections.swellgarfo.com/game/-Nn9HzfbGsdQqWHeqYgI'>שישי</a>
     </div>
     <div class='puzzle-link'>
+      <input type="checkbox" class="toggle-checkbox">
       <a href='https://connections.swellgarfo.com/game/-NnOOkCY_JOKzRFZaAQE'>שביעי</a>
     </div>
     <div class='puzzle-link'>
+      <input type="checkbox" class="toggle-checkbox">
       <a href='https://connections.swellgarfo.com/game/-NoMYUmwOEnnWG5iXWnf'>שמיני</a>
     </div>
     <div class='puzzle-link'>
+      <input type="checkbox" class="toggle-checkbox">
       <a href='https://connections.swellgarfo.com/game/-NoRSab7Jeptq-PQwh4y'>תשיעי</a>
     </div>
     <div class='puzzle-link'>
+      <input type="checkbox" class="toggle-checkbox">
       <a href='https://connections.swellgarfo.com/game/-NpP_tAa6ItWam67RJDu'>עשירי</a>
       <span class='credit'>
         קרדיט לטליה לקבוצה הצהובה 💛
